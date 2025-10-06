@@ -1,0 +1,2 @@
+-- Placeholder initial migration for tutlabs.live
+-- Real Drizzle-generated migrations will replace this
