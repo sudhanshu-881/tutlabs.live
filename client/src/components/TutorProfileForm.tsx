@@ -79,10 +79,18 @@ export const TutorProfileForm: React.FC = () => {
         </div>
       </div>
       <fieldset className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => (
-          <label key={d} className="flex items-center gap-2 text-sm">
-            <input type="checkbox" {...register(`available${d}` as const)} />
-            <span>{d}</span>
+        {[
+          { label: 'Mon', key: 'availableMon' as const },
+          { label: 'Tue', key: 'availableTue' as const },
+          { label: 'Wed', key: 'availableWed' as const },
+          { label: 'Thu', key: 'availableThu' as const },
+          { label: 'Fri', key: 'availableFri' as const },
+          { label: 'Sat', key: 'availableSat' as const },
+          { label: 'Sun', key: 'availableSun' as const },
+        ].map(({ label, key }) => (
+          <label key={key} className="flex items-center gap-2 text-sm">
+            <input type="checkbox" {...register(key)} />
+            <span>{label}</span>
           </label>
         ))}
       </fieldset>

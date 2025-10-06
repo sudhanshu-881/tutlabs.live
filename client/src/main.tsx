@@ -10,6 +10,7 @@ import { Toaster } from './hooks/use-toast'
 import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
 import { TutorProfileForm } from './components/TutorProfileForm'
+import { TutorCard } from './components/TutorCard'
 
 function HomePage() {
   const [subject, setSubject] = React.useState('')
