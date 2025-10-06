@@ -7,6 +7,8 @@ import { queryClient } from './lib/queryClient'
 import { ThemeProvider } from './components/ThemeProvider'
 import { Header } from './components/Header'
 import { Toaster } from './hooks/use-toast'
+import { LoginPage } from './pages/LoginPage'
+import { SignupPage } from './pages/SignupPage'
 
 function HomePage() {
   return (
@@ -29,6 +31,8 @@ const App: React.FC = () => (
     <ThemeProvider>
       <Switch>
         <Route path="/" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
         <Route component={NotFound} />
       </Switch>
       <Toaster position="top-right" richColors />

@@ -4,6 +4,10 @@ import { ThemeToggle } from './ThemeToggle'
 import { Button } from './ui/button'
 
 export const Header: React.FC = () => {
+  const handleSignOut = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' })
+    window.location.href = '/'
+  }
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
@@ -11,6 +15,9 @@ export const Header: React.FC = () => {
         <nav className="ml-auto flex items-center gap-2">
           <Link href="/tutors"><Button variant="ghost">Tutors</Button></Link>
           <Link href="/messages"><Button variant="ghost">Messages</Button></Link>
+          <Link href="/login"><Button variant="ghost">Login</Button></Link>
+          <Link href="/signup"><Button>Sign up</Button></Link>
+          <Button variant="ghost" onClick={handleSignOut}>Sign out</Button>
           <ThemeToggle />
         </nav>
       </div>
