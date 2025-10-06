@@ -12,12 +12,56 @@ import { SignupPage } from './pages/SignupPage'
 import { TutorProfileForm } from './components/TutorProfileForm'
 
 function HomePage() {
+  const [subject, setSubject] = React.useState('')
+  const [city, setCity] = React.useState('')
+  const [coords, setCoords] = React.useState<{ lat: number; lng: number } | null>(null)
+  const [tutors, setTutors] = React.useState<any[]>([])
+
+  const doSearch = async () => {
+    let lat = coords?.lat
+    let lng = coords?.lng
+    if (!lat || !lng) {
+      // fallback: attempt geolocation
+      await new Promise<void>((resolve) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            lat = pos.coords.latitude
+            lng = pos.coords.longitude
+            setCoords({ lat: lat!, lng: lng! })
+            resolve()
+          },
+          () => resolve(),
+          { enableHighAccuracy: true, timeout: 4000 }
+        )
+      })
+    }
+    if (!lat || !lng) return
+    const params = new URLSearchParams()
+    params.set('lat', String(lat))
+    params.set('lng', String(lng))
+    if (subject) params.set('subject', subject)
+    const res = await fetch(`/api/tutors/nearby?${params.toString()}`)
+    if (res.ok) {
+      const data = await res.json()
+      setTutors(data.tutors || [])
+    }
+  }
+
   return (
     <div>
       <Header />
       <main className="mx-auto max-w-6xl px-4 py-6">
-        <h1 className="text-2xl font-semibold">tutlabs.live</h1>
-        <p className="text-muted-foreground">Location-based tutoring platform</p>
+        <h1 className="text-2xl font-semibold">Find nearby tutors</h1>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <input value={subject} onChange={(e) => setSubject(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="Subject (e.g., Math)" />
+          <input value={city} onChange={(e) => setCity(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="City (optional)" />
+          <button onClick={doSearch} className="h-10 rounded-md bg-black px-4 text-white dark:bg-white dark:text-black">Search</button>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {tutors.map((t) => (
+            <TutorCard key={t.userId} name={t.name ?? 'Tutor'} subjects={t.subjects ?? []} ratePerHour={t.ratePerHour ?? 0} city={t.city ?? ''} distanceMiles={t.distanceMiles} />
+          ))}
+        </div>
       </main>
     </div>
   )

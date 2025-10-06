@@ -6,14 +6,20 @@ export interface TutorCardProps {
   subjects: string[]
   ratePerHour: number
   city?: string
+  distanceMiles?: number
 }
 
-export const TutorCard: React.FC<TutorCardProps> = ({ name, subjects, ratePerHour, city }) => {
+export const TutorCard: React.FC<TutorCardProps> = ({ name, subjects, ratePerHour, city, distanceMiles }) => {
   return (
     <div className="rounded-lg border p-4">
       <div className="flex items-center justify-between">
         <div className="font-semibold text-lg">{name}</div>
-        <div className="text-sm text-muted-foreground">{city}</div>
+        <div className="text-right text-sm text-muted-foreground">
+          {city}
+          {distanceMiles != null && (
+            <div className="mt-1">{distanceMiles.toFixed(1)} mi</div>
+          )}
+        </div>
       </div>
       <div className="mt-2 text-sm">Subjects: {subjects.join(', ')}</div>
       <div className="mt-2 text-sm">Rate: ${ratePerHour}/hr</div>
