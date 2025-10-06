@@ -9,6 +9,7 @@ import { Header } from './components/Header'
 import { Toaster } from './hooks/use-toast'
 import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
+import { TutorProfileForm } from './components/TutorProfileForm'
 
 function HomePage() {
   return (
@@ -33,6 +34,15 @@ const App: React.FC = () => (
         <Route path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/tutor/me" component={() => (
+          <div>
+            <Header />
+            <main className="mx-auto max-w-3xl px-4 py-6">
+              <h1 className="mb-4 text-xl font-semibold">My Tutor Profile</h1>
+              <TutorProfileForm />
+            </main>
+          </div>
+        )} />
         <Route component={NotFound} />
       </Switch>
       <Toaster position="top-right" richColors />
