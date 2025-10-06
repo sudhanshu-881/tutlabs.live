@@ -11,6 +11,7 @@ import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
 import { TutorProfileForm } from './components/TutorProfileForm'
 import { TutorCard } from './components/TutorCard'
+import { RequirementsPage } from './pages/RequirementsPage'
 
 function HomePage() {
   const [subject, setSubject] = React.useState('')
@@ -88,6 +89,7 @@ const App: React.FC = () => (
             </main>
           </div>
         )} />
+        <Route path="/requirements" component={RequirementsPage} />
         <Route component={NotFound} />
       </Switch>
       <Toaster position="top-right" richColors />

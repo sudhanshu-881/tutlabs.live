@@ -15,6 +15,7 @@ export const Header: React.FC = () => {
         <nav className="ml-auto flex items-center gap-2">
           <Link href="/tutors"><Button variant="ghost">Tutors</Button></Link>
           <Link href="/messages"><Button variant="ghost">Messages</Button></Link>
+          <Link href="/requirements"><Button variant="ghost">Requirements</Button></Link>
           <Link href="/login"><Button variant="ghost">Login</Button></Link>
           <Link href="/signup"><Button>Sign up</Button></Link>
           <Button variant="ghost" onClick={handleSignOut}>Sign out</Button>

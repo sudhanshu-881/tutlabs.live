@@ -33,6 +33,15 @@ export const tutorProfiles = pgTable('tutor_profiles', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 })
 
+export const requirements = pgTable('requirements', {
+  id: serial('id').primaryKey(),
+  parentUserId: integer('parent_user_id').references(() => users.id).notNull(),
+  subject: varchar('subject', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  city: varchar('city', { length: 255 }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+})
+
 export const RegisterSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
@@ -43,6 +52,21 @@ export const RegisterSchema = z.object({
 export const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
+})
+
+export const RequirementCreateSchema = z.object({
+  subject: z.string().min(1).max(255),
+  description: z.string().min(1),
+  city: z.string().max(255).optional().nullable(),
+})
+
+export const RequirementOutputSchema = z.object({
+  id: z.number(),
+  parentUserId: z.number(),
+  subject: z.string(),
+  description: z.string(),
+  city: z.string().nullish(),
+  createdAt: z.date(),
 })
 
 export const TutorProfileUpsertSchema = z.object({
@@ -86,5 +110,7 @@ export const TutorProfileOutputSchema = z.object({
 
 export type RegisterInput = z.infer<typeof RegisterSchema>
 export type LoginInput = z.infer<typeof LoginSchema>
+export type RequirementCreate = z.infer<typeof RequirementCreateSchema>
+export type RequirementOutput = z.infer<typeof RequirementOutputSchema>
 export type TutorProfileUpsert = z.infer<typeof TutorProfileUpsertSchema>
 export type TutorProfileOutput = z.infer<typeof TutorProfileOutputSchema>
