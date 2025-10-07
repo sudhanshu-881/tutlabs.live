@@ -58,20 +58,22 @@ function HomePage() {
     <div>
       <Header />
       <Hero />
-      <div className="mx-auto max-w-6xl px-4 py-6">
+      <main id="main" className="mx-auto max-w-6xl px-4 py-6" role="main">
         <Hero3D />
         <h2 id="search" className="mt-8 text-2xl font-semibold">Find nearby tutors</h2>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-          <input value={subject} onChange={(e) => setSubject(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="Subject (e.g., Math)" />
-          <input value={city} onChange={(e) => setCity(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="City (optional)" />
-          <button onClick={doSearch} className="h-10 rounded-md bg-black px-4 text-white dark:bg-white dark:text-black">Search</button>
-        </div>
+        <form aria-labelledby="search" className="mt-4 flex flex-col gap-3 sm:flex-row" onSubmit={(e) => { e.preventDefault(); doSearch() }}>
+          <label className="sr-only" htmlFor="subject">Subject</label>
+          <input id="subject" value={subject} onChange={(e) => setSubject(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="Subject (e.g., Math)" />
+          <label className="sr-only" htmlFor="city">City</label>
+          <input id="city" value={city} onChange={(e) => setCity(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="City (optional)" />
+          <button type="submit" className="h-10 rounded-md bg-black px-4 text-white dark:bg-white dark:text-black">Search</button>
+        </form>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tutors.map((t) => (
             <TutorCard key={t.userId} name={t.name ?? 'Tutor'} subjects={t.subjects ?? []} ratePerHour={t.ratePerHour ?? 0} city={t.city ?? ''} distanceMiles={t.distanceMiles} />
           ))}
         </div>
-      </div>
+      </main>
     </div>
   )
 }

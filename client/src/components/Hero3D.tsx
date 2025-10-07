@@ -15,7 +15,7 @@ function FloatingTorus() {
 
 export const Hero3D: React.FC = () => {
   return (
-    <div className="h-[320px] w-full rounded-xl border bg-gradient-to-b from-transparent to-[hsl(var(--accent))]">
+    <div className="h-[320px] w-full rounded-xl border bg-gradient-to-b from-transparent to-[hsl(var(--accent))]" aria-hidden>
       <Canvas camera={{ position: [0, 0, 4] }}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[4, 4, 4]} intensity={0.8} />
