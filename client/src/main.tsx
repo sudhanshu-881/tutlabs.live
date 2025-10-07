@@ -12,6 +12,7 @@ import { SignupPage } from './pages/SignupPage'
 import { TutorProfileForm } from './components/TutorProfileForm'
 import { TutorCard } from './components/TutorCard'
 import { RequirementsPage } from './pages/RequirementsPage'
+import { MessagesPage } from './pages/MessagesPage'
 
 function HomePage() {
   const [subject, setSubject] = React.useState('')
@@ -90,6 +91,7 @@ const App: React.FC = () => (
           </div>
         )} />
         <Route path="/requirements" component={RequirementsPage} />
+        <Route path="/messages" component={MessagesPage} />
         <Route component={NotFound} />
       </Switch>
       <Toaster position="top-right" richColors />

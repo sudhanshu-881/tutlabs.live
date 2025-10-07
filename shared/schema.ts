@@ -42,6 +42,16 @@ export const requirements = pgTable('requirements', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 })
 
+export const messages = pgTable('messages', {
+  id: serial('id').primaryKey(),
+  senderId: integer('sender_id').references(() => users.id).notNull(),
+  recipientId: integer('recipient_id').references(() => users.id).notNull(),
+  body: text('body').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  readAt: timestamp('read_at', { withTimezone: true }),
+})
+
+// Zod Schemas
 export const RegisterSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
@@ -67,6 +77,20 @@ export const RequirementOutputSchema = z.object({
   description: z.string(),
   city: z.string().nullish(),
   createdAt: z.date(),
+})
+
+export const MessageCreateSchema = z.object({
+  recipientId: z.number().int().positive(),
+  body: z.string().min(1).max(5000),
+})
+
+export const MessageOutputSchema = z.object({
+  id: z.number(),
+  senderId: z.number(),
+  recipientId: z.number(),
+  body: z.string(),
+  createdAt: z.date(),
+  readAt: z.date().nullish(),
 })
 
 export const TutorProfileUpsertSchema = z.object({
@@ -112,5 +136,7 @@ export type RegisterInput = z.infer<typeof RegisterSchema>
 export type LoginInput = z.infer<typeof LoginSchema>
 export type RequirementCreate = z.infer<typeof RequirementCreateSchema>
 export type RequirementOutput = z.infer<typeof RequirementOutputSchema>
+export type MessageCreate = z.infer<typeof MessageCreateSchema>
+export type MessageOutput = z.infer<typeof MessageOutputSchema>
 export type TutorProfileUpsert = z.infer<typeof TutorProfileUpsertSchema>
 export type TutorProfileOutput = z.infer<typeof TutorProfileOutputSchema>
