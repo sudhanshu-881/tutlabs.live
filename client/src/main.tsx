@@ -7,14 +7,16 @@ import { queryClient } from './lib/queryClient'
 import { ThemeProvider } from './components/ThemeProvider'
 import { Header } from './components/Header'
 import { Toaster } from './hooks/use-toast'
-import { LoginPage } from './pages/LoginPage'
-import { SignupPage } from './pages/SignupPage'
+import { Suspense, lazy } from 'react'
+const LoginPage = lazy(() => import('./pages/LoginPage'))
+const SignupPage = lazy(() => import('./pages/SignupPage'))
 import { TutorProfileForm } from './components/TutorProfileForm'
 import { TutorCard } from './components/TutorCard'
 import { RequirementsPage } from './pages/RequirementsPage'
 import { MessagesPage } from './pages/MessagesPage'
 import { Hero } from './components/Hero'
 import { Hero3D } from './components/Hero3D'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 function HomePage() {
   const [subject, setSubject] = React.useState('')
@@ -81,10 +83,13 @@ function NotFound() {
 const App: React.FC = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
+      <ErrorBoundary>
       <Switch>
         <Route path="/" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignupPage} />
+        <Suspense fallback={<div className="p-6">Loading...</div>}>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SignupPage} />
+        </Suspense>
         <Route path="/tutor/me" component={() => (
           <div>
             <Header />
@@ -98,6 +103,7 @@ const App: React.FC = () => (
         <Route path="/messages" component={MessagesPage} />
         <Route component={NotFound} />
       </Switch>
+      </ErrorBoundary>
       <Toaster position="top-right" richColors />
     </ThemeProvider>
   </QueryClientProvider>
