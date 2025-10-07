@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
     window.location.href = '/'
   }
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-40 w-full border-b bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black/30">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
         <Link href="/" className="font-semibold text-lg">tutlabs</Link>
         <nav className="ml-auto flex items-center gap-2">

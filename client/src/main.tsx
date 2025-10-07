@@ -13,6 +13,8 @@ import { TutorProfileForm } from './components/TutorProfileForm'
 import { TutorCard } from './components/TutorCard'
 import { RequirementsPage } from './pages/RequirementsPage'
 import { MessagesPage } from './pages/MessagesPage'
+import { Hero } from './components/Hero'
+import { Hero3D } from './components/Hero3D'
 
 function HomePage() {
   const [subject, setSubject] = React.useState('')
@@ -53,8 +55,10 @@ function HomePage() {
   return (
     <div>
       <Header />
-      <main className="mx-auto max-w-6xl px-4 py-6">
-        <h1 className="text-2xl font-semibold">Find nearby tutors</h1>
+      <Hero />
+      <div className="mx-auto max-w-6xl px-4 py-6">
+        <Hero3D />
+        <h2 id="search" className="mt-8 text-2xl font-semibold">Find nearby tutors</h2>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <input value={subject} onChange={(e) => setSubject(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="Subject (e.g., Math)" />
           <input value={city} onChange={(e) => setCity(e.target.value)} className="h-10 w-full rounded-md border px-3" placeholder="City (optional)" />
@@ -65,7 +69,7 @@ function HomePage() {
             <TutorCard key={t.userId} name={t.name ?? 'Tutor'} subjects={t.subjects ?? []} ratePerHour={t.ratePerHour ?? 0} city={t.city ?? ''} distanceMiles={t.distanceMiles} />
           ))}
         </div>
-      </main>
+      </div>
     </div>
   )
 }
