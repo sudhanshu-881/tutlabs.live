@@ -1,9 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { initSentryServer } from '../_monitor'
 import { db, schema } from '../_db'
 import { readTokenFromRequest, verifyJwt } from '../_jwt'
 import { RequirementCreateSchema } from '../../shared/schema'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  await initSentryServer()
   if (req.method === 'GET') {
     const items = await db
       .select({

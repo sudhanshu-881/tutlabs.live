@@ -1,10 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { initSentryServer } from '../_monitor'
 import { db, schema } from '../_db'
 import { readTokenFromRequest, verifyJwt } from '../_jwt'
 import { MessageCreateSchema } from '../../shared/schema'
 import { and, or, eq, desc } from 'drizzle-orm'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  await initSentryServer()
   const token = readTokenFromRequest(req)
   const payload = token && verifyJwt(token)
   if (!payload) return res.status(401).json({ error: 'Unauthorized' })

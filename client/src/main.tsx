@@ -17,8 +17,10 @@ import { MessagesPage } from './pages/MessagesPage'
 import { Hero } from './components/Hero'
 import { Hero3D } from './components/Hero3D'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { initMonitoring } from './lib/monitoring'
 
 function HomePage() {
+  React.useEffect(() => { initMonitoring() }, [])
   const [subject, setSubject] = React.useState('')
   const [city, setCity] = React.useState('')
   const [coords, setCoords] = React.useState<{ lat: number; lng: number } | null>(null)
