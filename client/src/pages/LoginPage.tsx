@@ -10,7 +10,7 @@ const LoginSchema = z.object({ email: z.string().email(), password: z.string().m
 
 type LoginInput = z.infer<typeof LoginSchema>
 
-export const LoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginInput>({ resolver: zodResolver(LoginSchema) })
 
   const onSubmit = async (data: LoginInput) => {
@@ -47,3 +47,5 @@ export const LoginPage: React.FC = () => {
     </div>
   )
 }
+
+export default LoginPage

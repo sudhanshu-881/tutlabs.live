@@ -15,7 +15,7 @@ const SignupSchema = z.object({
 
 type SignupInput = z.infer<typeof SignupSchema>
 
-export const SignupPage: React.FC = () => {
+const SignupPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignupInput>({ resolver: zodResolver(SignupSchema) })
 
   const onSubmit = async (data: SignupInput) => {
@@ -64,3 +64,5 @@ export const SignupPage: React.FC = () => {
     </div>
   )
 }
+
+export default SignupPage
