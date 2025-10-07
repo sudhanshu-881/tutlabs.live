@@ -9,8 +9,13 @@ export function initMonitoring() {
   const posthogKey = (window as any).__POSTHOG_KEY__ || import.meta.env.VITE_POSTHOG_KEY
   const posthogHost = (window as any).__POSTHOG_HOST__ || import.meta.env.VITE_POSTHOG_HOST || 'https://app.posthog.com'
   if (posthogKey) {
-    import('posthog-js').then(mod => {
-      mod.init(posthogKey as string, { api_host: posthogHost as string, capture_pageview: true })
-    }).catch(() => {})
+    import('posthog-js')
+      .then((m: any) => {
+        const initFn = m?.init || m?.default?.init
+        if (typeof initFn === 'function') {
+          initFn(posthogKey as string, { api_host: posthogHost as string, capture_pageview: true })
+        }
+      })
+      .catch(() => {})
   }
 }
